@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Personal Profile & Live Dashboard with real-time clock, personalized greeting, and interactive widgets.">
+  <title>Personal Space & Live Clock</title>
+  
+  <!-- Modern Typography: Outfit & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient background glow orbs -->
+  <div class="bg-ambient" aria-hidden="true">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+  </div>
+
+  <div class="app-wrapper">
+    <!-- Top Navigation Bar -->
+    <header class="top-nav">
+      <div class="nav-brand">
+        <div class="brand-icon" aria-hidden="true">✦</div>
+        <div class="brand-meta">
+          <span class="brand-title">Personal Portal</span>
+          <span class="brand-subtitle" id="portalSub">Living Space & Time</span>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Interactive Theme Palette Picker -->
+        <div class="theme-picker" title="Customize Accent Palette" role="radiogroup" aria-label="Theme Accent Picker">
+          <button class="theme-dot dot-indigo active" data-theme="indigo" aria-label="Indigo Theme" title="Indigo"></button>
+          <button class="theme-dot dot-cyan" data-theme="cyan" aria-label="Cyan Theme" title="Cyan"></button>
+          <button class="theme-dot dot-rose" data-theme="rose" aria-label="Rose Theme" title="Rose"></button>
+          <button class="theme-dot dot-emerald" data-theme="emerald" aria-label="Emerald Theme" title="Emerald"></button>
+        </div>
+
+        <!-- Quick Edit Profile Button -->
+        <button class="btn-icon" id="headerEditBtn" title="Edit Profile Info" aria-label="Edit Profile">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Layout Grid -->
+    <main class="dashboard-grid">
+      <!-- Left Profile Hero Column -->
+      <section class="glass-card profile-card" aria-label="User Profile">
+        <div class="avatar-wrapper">
+          <div class="avatar-ring" aria-hidden="true"></div>
+          <img src="avatar.jpg" alt="Profile Portrait" class="avatar-img" id="userAvatar">
+          <div class="status-indicator" title="Status: Online & Ready" aria-label="Status: Active"></div>
+        </div>
+
+        <div class="profile-info">
+          <div class="name-container">
+            <h1 class="user-name" id="userNameDisplay">Alex Morgan</h1>
+            <button class="btn-edit-inline" id="editNameInlineBtn" title="Click to rename" aria-label="Edit Name">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+              </svg>
+            </button>
+          </div>
+          <p class="user-role" id="userRoleDisplay">Software Architect & Designer</p>
+          <p class="user-tagline" id="userBioDisplay">
+            Building intuitive digital experiences at the intersection of design, intelligent systems, and modern technology.
+          </p>
+
+          <!-- Core Skill Tags -->
+          <div class="tag-cloud">
+            <span class="tag-pill">⚡ Real-time Systems</span>
+            <span class="tag-pill">🎨 Modern UI/UX</span>
+            <span class="tag-pill">🚀 Web Engineering</span>
+            <span class="tag-pill">🤖 AI Workflows</span>
+          </div>
+        </div>
+
+        <!-- Social / Action Links -->
+        <div class="social-links">
+          <a href="#github" class="social-btn" id="linkGithub" title="GitHub Profile">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+            </svg>
+            <span>GitHub</span>
+          </a>
+          <a href="#connect" class="social-btn" id="linkConnect" title="Connect / Message">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span>Contact</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Right Dashboard Column (Time, Greetings, Widgets) -->
+      <div class="right-dashboard">
+        <!-- Dynamic Greeting Banner -->
+        <section class="glass-card greeting-banner" aria-label="Dynamic Greeting">
+          <div class="greeting-text-area">
+            <span class="greeting-tag" id="greetingTag">
+              <span id="greetingEmoji" aria-hidden="true">☀️</span>
+              <span id="greetingPhase">Welcome</span>
+            </span>
+            <h2 class="greeting-title" id="greetingHeading">Good day to you!</h2>
+          </div>
+
+          <div class="location-pill" title="Detected Local Time Zone">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+            <span id="timeZoneName">UTC</span>
+          </div>
+        </section>
+
+        <!-- Live Clock Hero Card -->
+        <section class="glass-card clock-hero-card" aria-label="Live Real-time Clock">
+          <div class="clock-header-controls">
+            <div class="clock-mode-tag">
+              <span class="live-pulse-dot" aria-hidden="true"></span>
+              <span>Live Precision Clock</span>
+            </div>
+
+            <!-- 12-Hour / 24-Hour Toggle -->
+            <div class="clock-format-toggle" role="group" aria-label="Time Format Selection">
+              <button class="format-btn active" id="btn12h" type="button">12H</button>
+              <button class="format-btn" id="btn24h" type="button">24H</button>
+            </div>
+          </div>
+
+          <!-- Digital Time Readout -->
+          <div class="clock-display" id="mainClockDisplay" aria-live="polite">
+            <span class="digit-segment" id="clockHours">10</span>
+            <span class="colon-separator">:</span>
+            <span class="digit-segment" id="clockMinutes">12</span>
+            <span class="colon-separator">:</span>
+            <span class="digit-segment seconds-segment" id="clockSeconds">00</span>
+            <span class="ampm-badge" id="clockAmpm">AM</span>
+          </div>
+
+          <!-- Calendar Date Pill -->
+          <div class="date-pill" id="fullDateDisplay">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span id="calendarDateText">Wednesday, September 16, 2026</span>
+          </div>
+
+          <!-- Day Progression Tracker -->
+          <div class="day-progress-container">
+            <div class="progress-labels">
+              <span>Day Progress</span>
+              <span id="dayPercentText">42.5%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-bar" id="dayProgressBar" style="width: 42.5%;"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Lower Widgets Row -->
+        <div class="widgets-row">
+          <!-- Daily Philosophy / Inspiration Widget -->
+          <section class="glass-card widget-card" aria-label="Quote of the Day">
+            <div class="widget-title-area">
+              <span class="widget-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+                Thought of the Day
+              </span>
+              <button class="btn-icon" id="btnNextQuote" style="width: 28px; height: 28px;" title="New Thought" aria-label="Refresh Quote">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23 4 23 10 17 10"></polyline>
+                  <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                </svg>
+              </button>
+            </div>
+            <p class="quote-content" id="quoteText">"Time is the canvas upon which we paint our boldest ideas."</p>
+            <p class="quote-author" id="quoteAuthor">— Creative Reflection</p>
+          </section>
+
+          <!-- Focus & Key Highlights Widget -->
+          <section class="glass-card widget-card" aria-label="Today's Highlights">
+            <div class="widget-title-area">
+              <span class="widget-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+                Current Focus
+              </span>
+              <span class="tag-pill" style="padding: 0.2rem 0.5rem; font-size: 0.7rem;">Active</span>
+            </div>
+            <ul class="notes-list">
+              <li class="note-item">
+                <span class="bullet">✦</span>
+                <span>Crafting modern web interfaces with precision</span>
+              </li>
+              <li class="note-item">
+                <span class="bullet">✦</span>
+                <span>Real-time dashboard architecture & aesthetics</span>
+              </li>
+              <li class="note-item">
+                <span class="bullet">✦</span>
+                <span>Exploring high-performance client experiences</span>
+              </li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+      <p>Personal Page &copy; <span id="currentYear">2026</span> • Designed with precision, elegance, and speed.</p>
+    </footer>
+  </div>
+
+  <!-- Profile Edit Modal -->
+  <div class="modal-overlay" id="editModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-dialog">
+      <h3 class="modal-title" id="modalTitle">Customize Profile</h3>
+      <p class="modal-desc">Personalize your display name, role, and bio. These settings are saved in your browser.</p>
+
+      <form id="editProfileForm">
+        <div class="form-group">
+          <label for="inputName">Your Full Name</label>
+          <input type="text" id="inputName" class="form-input" placeholder="e.g. Alex Morgan" required maxlength="40">
+        </div>
+
+        <div class="form-group">
+          <label for="inputRole">Professional Title / Role</label>
+          <input type="text" id="inputRole" class="form-input" placeholder="e.g. Software Architect & Designer" required maxlength="50">
+        </div>
+
+        <div class="form-group">
+          <label for="inputBio">Tagline / Short Bio</label>
+          <input type="text" id="inputBio" class="form-input" placeholder="e.g. Exploring design, technology & code." maxlength="140">
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="btnCancelEdit">Cancel</button>
+          <button type="submit" class="btn-primary" id="btnSaveProfile">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 /**
  * Personal Page & Live Clock Dashboard Logic
  * Features: High-precision real-time clock, dynamic greeting, day progression,
- * theme customizer, and persistent user profile management.
+ * theme customizer, and persistent user profile management (Name, Dept, Role, Bio).
  */
 
 (function () {
@@ -10,18 +10,19 @@
   // --- Storage Keys ---
   const STORAGE_KEYS = {
     NAME: 'personal_page_user_name',
+    DEPT: 'personal_page_user_dept',
     ROLE: 'personal_page_user_role',
     BIO: 'personal_page_user_bio',
     FORMAT: 'personal_page_time_format',
-    THEME: 'personal_page_theme',
-    AVATAR: 'personal_page_avatar'
+    THEME: 'personal_page_theme'
   };
 
-  // --- Default Profile State ---
+  // --- Default Profile State (Fulfilling DIC 1 Requirements) ---
   const DEFAULT_PROFILE = {
-    name: 'Alex Morgan',
-    role: 'Software Architect & Designer',
-    bio: 'Building intuitive digital experiences at the intersection of design, intelligent systems, and modern technology.'
+    name: '巫佳祐',
+    dept: '🎓 資訊工程學系 (CSIE)',
+    role: '⚡ 專長：AI • IoT • Web Development',
+    bio: '熱愛探索人工智慧、物聯網與現代 Web 技術，致力於將演算法與優雅的使用者體驗結合，打造具備高效能且易用的智慧數位系統。'
   };
 
   // --- Curated Quotes ---
@@ -43,8 +44,8 @@
       author: "Architecture of Code"
     },
     {
-      text: "Focus is not saying yes to what you want, but saying no to a hundred other good ideas.",
-      author: "Steve Jobs"
+      text: "程式碼是思維的延伸，而時間賦予了邏輯生命的節奏。",
+      author: "資訊哲學"
     }
   ];
 
@@ -66,6 +67,7 @@
   const elGreetingHeading = document.getElementById('greetingHeading');
 
   const elUserNameDisplay = document.getElementById('userNameDisplay');
+  const elUserDeptDisplay = document.getElementById('userDeptDisplay');
   const elUserRoleDisplay = document.getElementById('userRoleDisplay');
   const elUserBioDisplay = document.getElementById('userBioDisplay');
 
@@ -76,6 +78,7 @@
   const editModal = document.getElementById('editModal');
   const editForm = document.getElementById('editProfileForm');
   const inputName = document.getElementById('inputName');
+  const inputDept = document.getElementById('inputDept');
   const inputRole = document.getElementById('inputRole');
   const inputBio = document.getElementById('inputBio');
   const btnCancelEdit = document.getElementById('btnCancelEdit');
@@ -107,14 +110,16 @@
   // --- Profile Management ---
   function initProfile() {
     const savedName = localStorage.getItem(STORAGE_KEYS.NAME) || DEFAULT_PROFILE.name;
+    const savedDept = localStorage.getItem(STORAGE_KEYS.DEPT) || DEFAULT_PROFILE.dept;
     const savedRole = localStorage.getItem(STORAGE_KEYS.ROLE) || DEFAULT_PROFILE.role;
     const savedBio = localStorage.getItem(STORAGE_KEYS.BIO) || DEFAULT_PROFILE.bio;
 
-    renderProfile(savedName, savedRole, savedBio);
+    renderProfile(savedName, savedDept, savedRole, savedBio);
   }
 
-  function renderProfile(name, role, bio) {
+  function renderProfile(name, dept, role, bio) {
     if (elUserNameDisplay) elUserNameDisplay.textContent = name;
+    if (elUserDeptDisplay) elUserDeptDisplay.textContent = dept;
     if (elUserRoleDisplay) elUserRoleDisplay.textContent = role;
     if (elUserBioDisplay) elUserBioDisplay.textContent = bio;
 
@@ -123,44 +128,50 @@
 
   function openEditModal() {
     const currentName = localStorage.getItem(STORAGE_KEYS.NAME) || DEFAULT_PROFILE.name;
+    const currentDept = localStorage.getItem(STORAGE_KEYS.DEPT) || DEFAULT_PROFILE.dept;
     const currentRole = localStorage.getItem(STORAGE_KEYS.ROLE) || DEFAULT_PROFILE.role;
     const currentBio = localStorage.getItem(STORAGE_KEYS.BIO) || DEFAULT_PROFILE.bio;
 
-    inputName.value = currentName;
-    inputRole.value = currentRole;
-    inputBio.value = currentBio;
+    if (inputName) inputName.value = currentName;
+    if (inputDept) inputDept.value = currentDept;
+    if (inputRole) inputRole.value = currentRole;
+    if (inputBio) inputBio.value = currentBio;
 
-    editModal.classList.add('open');
-    inputName.focus();
+    if (editModal) {
+      editModal.classList.add('open');
+      inputName.focus();
+    }
   }
 
   function closeEditModal() {
-    editModal.classList.remove('open');
+    if (editModal) editModal.classList.remove('open');
   }
 
   function handleSaveProfile(e) {
     e.preventDefault();
-    const newName = inputName.value.trim() || DEFAULT_PROFILE.name;
-    const newRole = inputRole.value.trim() || DEFAULT_PROFILE.role;
-    const newBio = inputBio.value.trim() || DEFAULT_PROFILE.bio;
+    const newName = inputName ? inputName.value.trim() || DEFAULT_PROFILE.name : DEFAULT_PROFILE.name;
+    const newDept = inputDept ? inputDept.value.trim() || DEFAULT_PROFILE.dept : DEFAULT_PROFILE.dept;
+    const newRole = inputRole ? inputRole.value.trim() || DEFAULT_PROFILE.role : DEFAULT_PROFILE.role;
+    const newBio = inputBio ? inputBio.value.trim() || DEFAULT_PROFILE.bio : DEFAULT_PROFILE.bio;
 
     localStorage.setItem(STORAGE_KEYS.NAME, newName);
+    localStorage.setItem(STORAGE_KEYS.DEPT, newDept);
     localStorage.setItem(STORAGE_KEYS.ROLE, newRole);
     localStorage.setItem(STORAGE_KEYS.BIO, newBio);
 
-    renderProfile(newName, newRole, newBio);
+    renderProfile(newName, newDept, newRole, newBio);
     closeEditModal();
   }
 
-  // --- Time & Clock Functionality ---
+  // --- Time & Clock Functionality (4. Live Clock) ---
   function initTimeZone() {
     try {
       const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       if (elTimeZone) {
-        elTimeZone.textContent = timeZone || 'Local';
+        elTimeZone.textContent = timeZone || 'Asia/Taipei';
       }
     } catch (e) {
-      if (elTimeZone) elTimeZone.textContent = 'Local Time';
+      if (elTimeZone) elTimeZone.textContent = 'Asia/Taipei';
     }
   }
 
@@ -170,7 +181,7 @@
     const minutes = now.getMinutes();
     const seconds = now.getSeconds();
 
-    // Format determination
+    // 12H vs 24H Format handling
     let ampm = '';
     if (is24HourFormat) {
       if (elAmpm) elAmpm.style.display = 'none';
@@ -181,20 +192,30 @@
         elAmpm.textContent = ampm;
       }
       hours = hours % 12;
-      hours = hours ? hours : 12; // 0 becomes 12
+      hours = hours ? hours : 12; // 0 becomes 12 in 12h format
     }
 
+    // Update digits with leading zeros (HH : MM : SS)
     if (elHours) elHours.textContent = String(hours).padStart(2, '0');
     if (elMinutes) elMinutes.textContent = String(minutes).padStart(2, '0');
     if (elSeconds) elSeconds.textContent = String(seconds).padStart(2, '0');
 
-    // Date String
-    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    // Calendar Date String
     if (elDateText) {
-      elDateText.textContent = now.toLocaleDateString(undefined, dateOptions);
+      try {
+        const dateString = now.toLocaleDateString('zh-TW', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          weekday: 'long'
+        });
+        elDateText.textContent = dateString;
+      } catch (e) {
+        elDateText.textContent = now.toDateString();
+      }
     }
 
-    // Day Progress (seconds elapsed out of 86400 in a day)
+    // Day Progress Bar (% of 86400 seconds elapsed)
     const rawHours = now.getHours();
     const totalSeconds = (rawHours * 3600) + (minutes * 60) + seconds;
     const dayProgressPercent = ((totalSeconds / 86400) * 100).toFixed(1);
@@ -210,11 +231,12 @@
   function initClock() {
     updateClockFormatButtons();
     updateClock();
-    // Update every second with accurate alignment
+    // Update every second automatically
     setInterval(updateClock, 1000);
   }
 
   function updateClockFormatButtons() {
+    if (!btn12h || !btn24h) return;
     if (is24HourFormat) {
       btn24h.classList.add('active');
       btn12h.classList.remove('active');
@@ -234,27 +256,27 @@
   // --- Dynamic Greeting Based on Time of Day ---
   function updateGreeting(name) {
     const hour = new Date().getHours();
-    const firstName = name.split(' ')[0] || name;
+    const displayName = name || DEFAULT_PROFILE.name;
 
     let greeting = 'Good day';
     let phase = 'Daytime Focus';
     let emoji = '☀️';
 
     if (hour >= 5 && hour < 12) {
-      greeting = `Good morning, ${firstName}!`;
+      greeting = `Good morning, ${displayName}!`;
       phase = 'Morning Momentum';
       emoji = '🌅';
     } else if (hour >= 12 && hour < 17) {
-      greeting = `Good afternoon, ${firstName}!`;
+      greeting = `Good afternoon, ${displayName}!`;
       phase = 'High Productivity';
       emoji = '☀️';
     } else if (hour >= 17 && hour < 22) {
-      greeting = `Good evening, ${firstName}!`;
+      greeting = `Good evening, ${displayName}!`;
       phase = 'Golden Twilight';
       emoji = '🌆';
     } else {
-      greeting = `Burning the midnight oil, ${firstName}!`;
-      phase = 'Deep Focus & Solitude';
+      greeting = `夜深了，專注力滿載，${displayName}！`;
+      phase = 'Deep Night Focus';
       emoji = '🌙';
     }
 
@@ -307,7 +329,7 @@
 
   // --- Event Listeners ---
   function setupEventListeners() {
-    // 12h / 24h Toggles
+    // 12H / 24H Toggle Buttons
     if (btn12h) btn12h.addEventListener('click', () => setClockFormat('12h'));
     if (btn24h) btn24h.addEventListener('click', () => setClockFormat('24h'));
 
@@ -345,7 +367,7 @@
     }
   }
 
-  // Run on DOM loaded
+  // Run on DOM ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

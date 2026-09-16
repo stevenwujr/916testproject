@@ -80,16 +80,15 @@ flowchart TD
 
 ---
 
-## ✨ Key Features
+## ✨ 核心規格與五大必備項目 (Core Requirements Checklist)
 
-| Feature | Description |
-| :--- | :--- |
-| ⏱️ **Live Precision Clock** | High-precision digital display with pulsing colon separators, seconds segment, and 12-hour / 24-hour mode toggling. |
-| 🌅 **Dynamic Greeting** | Greets the user based on the current hour (e.g., *"Good morning, 巫佳祐!"*) with contextual status badges and auto-detected timezone. |
-| 📊 **Day Progress Bar** | Calculates elapsed seconds out of 86,400 to show the exact percentage of the current day completed. |
-| 👤 **Profile Customization** | Allows instant renaming and title editing via an interactive modal, saved locally in browser storage. |
-| 🎨 **Theme Switcher** | Switch between 4 curated neon color palettes (Indigo, Cyan, Rose, Emerald) in real time. |
-| 💡 **Interactive Widgets** | Includes a cycle-able "Thought of the Day" quote widget and a "Current Focus" checklist. |
+| 必備項目 | 實作內容與規格說明 | 達成狀態 |
+| :--- | :--- | :---: |
+| 👤 **1. Profile (個人資訊)** | 完整呈現 **姓名**（巫佳祐）、**Avatar 個人頭貼**、**科系**（資訊工程學系 CSIE）、**專長**（AI • IoT • Web）、以及**簡短自我介紹**，並提供即時自訂彈窗。 | ✅ 已達成 |
+| 🛠 **2. Skills (專業技能)** | 列出 6 項核心技術（遠超規定之 3 項）：**Python**、**C / C++**、**AI & Machine Learning**、**Web Development**、**IoT & Embedded**、**Data Analysis**，皆附專業領域標籤。 | ✅ 已達成 |
+| 🚀 **3. Projects (專案作品)** | 包含已完成作品 **Personal Portal & Live Clock**（含技術標籤、[Live Demo](https://stevenwujr.github.io/916testproject/) 與 GitHub Link），以及本學期預計完成作品 **AI Edge IoT Vision System**。 | ✅ 已達成 |
+| 🕐 **4. Live Clock (即時時鐘)** | 使用原生 JavaScript 打造毫秒級自動更新時鐘，精確顯示 **HH : MM : SS**，並支援 12H/24H 切換、完整中文日期與當日時間進度條。 | ✅ 已達成 |
+| 📬 **5. Contact & Actions (聯絡與社群)** | 整合 GitHub 專案庫連結、Email 聯絡按鈕、線上在線狀態指示燈與自訂霓虹主題切換器。 | ✅ 已達成 |
 
 ---
 
